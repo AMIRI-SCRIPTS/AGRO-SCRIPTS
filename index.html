@@ -69,7 +69,7 @@
   .cta-row { display: flex; gap: 14px; justify-content: center; margin-top: 34px; flex-wrap: wrap; }
   .btn {
     display: inline-block; padding: 13px 26px; border-radius: 10px;
-    font-weight: 700; font-size: 15px; cursor: pointer; transition: .2s;
+    font-weight: 700; font-size: 15px; cursor: pointer; transition: .2s; border: none;
   }
   .btn-primary {
     background: linear-gradient(180deg, var(--blue), #0f4fd6);
@@ -128,7 +128,6 @@
   }
   .plan .name { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
   .plan .price { font-size: 38px; font-weight: 800; margin: 12px 0 2px; }
-  .plan .price small { font-size: 15px; color: var(--muted); font-weight: 500; }
   .plan .note { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
   .plan .btn { width: 100%; padding: 11px; font-size: 14px; }
 
@@ -140,18 +139,52 @@
   .article h3 { font-size: 22px; margin-bottom: 6px; }
   .article .meta { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
   .article p { color: #c3cbdb; margin-bottom: 14px; font-size: 15px; }
+  .article ul { color: #c3cbdb; margin: 0 0 16px 20px; font-size: 15px; }
+  .article li { margin-bottom: 8px; }
   .article strong { color: var(--blue-glow); }
-  .keybox {
-    margin-top: 18px; background: var(--bg); border: 1px dashed rgba(31, 111, 255, .5);
-    border-radius: 10px; padding: 16px 18px; font-family: ui-monospace, "Consolas", monospace;
-    color: var(--blue-glow); font-size: 14px;
+  .ladder {
+    background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; margin: 18px 0; font-size: 15px;
   }
+  .ladder div { padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .ladder div:last-child { border-bottom: none; }
+  .ladder b { color: var(--blue-glow); }
 
   /* FOOTER */
   footer { border-top: 1px solid var(--line); padding: 40px 0; color: var(--muted); font-size: 14px; }
   .foot-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; align-items: center; }
   .foot-links { display: flex; gap: 22px; }
   .foot-links a:hover { color: var(--text); }
+
+  /* POPUP */
+  .popup-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(3, 5, 9, .72); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .25s;
+  }
+  .popup-overlay.show { opacity: 1; pointer-events: auto; }
+  .popup {
+    background: var(--panel-2); border: 1px solid rgba(31, 111, 255, .45);
+    border-radius: 16px; max-width: 400px; width: 100%; padding: 32px 28px;
+    text-align: center; position: relative;
+    box-shadow: 0 0 70px rgba(31, 111, 255, .3);
+    transform: translateY(14px) scale(.97); transition: transform .25s;
+  }
+  .popup-overlay.show .popup { transform: translateY(0) scale(1); }
+  .popup .close {
+    position: absolute; top: 12px; right: 14px; background: none; border: none;
+    color: var(--muted); font-size: 22px; cursor: pointer; line-height: 1;
+  }
+  .popup .close:hover { color: var(--text); }
+  .popup .kick {
+    display: inline-block; font-size: 26px; font-weight: 900; letter-spacing: 1px;
+    background: linear-gradient(90deg, var(--blue-glow), #8fb8ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 10px;
+  }
+  .popup p { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+  .popup .btn { width: 100%; }
 </style>
 </head>
 <body>
@@ -250,14 +283,32 @@
 
     <section id="media">
       <div class="eyebrow">For creators</div>
-      <h2>Free Day Keys for Media.</h2>
+      <h2>Free Keys for Media.</h2>
       <div class="article">
-        <h3>Running a channel or a clip page? Get 24 hours on the house.</h3>
+        <h3>AgroWare Media Keys — open a ticket in the Discord to apply</h3>
         <div class="meta">Announcement · Launch Week</div>
-        <p>We want the community to feel the difference before they buy. If you make Rust content — clips, streams, montages, or full videos — you can grab a <strong>free 24-hour day key</strong> to put AgroWare on camera.</p>
-        <p>Requirements are light: show the script in action in a public post or stream, tag AgroWare, and link back to this page. One key per creator during launch week.</p>
-        <p>To claim yours, drop your channel link and a short note about what you'll make to our <strong>Discord</strong>. Keys are issued in batches starting Christmas Eve, so grab yours early — they don't last long.</p>
-        <div class="keybox">AGRO-MEDIA-2026 · 24h access · 1 per creator</div>
+        <p>Free 1-day key for Rust creators. Do well and it stacks all the way up to a monthly key.</p>
+
+        <p><strong>To apply:</strong> open a ticket and post:</p>
+        <ul>
+          <li>Your channel link</li>
+          <li>Platform + follower/sub count</li>
+          <li>One line on what you'll make</li>
+        </ul>
+
+        <p><strong>Eligible:</strong> 100+ TikTok followers OR 25+ YouTube subs. Rust content only. Prove the channel is yours — link it from the account or DM us from it.</p>
+
+        <p><strong>The ladder:</strong></p>
+        <div class="ladder">
+          <div>1-day key → post a video with <b>250+ views</b> → get a <b>3-day key</b></div>
+          <div>Hit <b>500 views</b> on that → join the <b>Media Team</b> + get a <b>free week key every month</b></div>
+        </div>
+
+        <p><strong>Commit to:</strong> use the key within 7 days, post at least one AgroWare video, link the page in your description or pinned comment, tag us, keep the post public 30 days.</p>
+
+        <p><strong>Rules:</strong> one key per stage, keys are non-transferable, no re-uploading other people's clips, views counted on the qualifying video only, no view-botting. Alts don't stack. Misuse = out. Keys are limited and drop in batches from Christmas Eve, first come first served. We can decline any application.</p>
+
+        <p>Approved applicants get their key in the ticket. Up to 48h during launch week. To claim a ladder reward, reopen the ticket with the video link and view count.</p>
       </div>
     </section>
   </div>
@@ -273,6 +324,52 @@
     </div>
   </div>
 </footer>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup" aria-hidden="true">
+  <div class="popup" role="dialog" aria-modal="true" aria-label="Free media key">
+    <button class="close" id="popupClose" aria-label="Close">&times;</button>
+    <div class="kick">FREE KEY</div>
+    <p>Rust creator? Grab a free 1-day key — and stack it up to a monthly key.</p>
+    <a class="btn btn-primary" href="#media" id="popupLearn">Learn more</a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var KEY = "agroware_popup_seen";
+    var overlay = document.getElementById("popup");
+
+    function close() {
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    function open() {
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    // once per visit (per browser)
+    if (!localStorage.getItem(KEY)) {
+      setTimeout(function () {
+        open();
+        try { localStorage.setItem(KEY, "1"); } catch (e) {}
+      }, 1800);
+    }
+
+    document.getElementById("popupClose").addEventListener("click", close);
+    document.getElementById("popupLearn").addEventListener("click", close);
+
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) close();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") close();
+    });
+  })();
+</script>
 
 </body>
 </html>
